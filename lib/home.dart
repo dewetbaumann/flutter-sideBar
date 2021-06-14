@@ -11,49 +11,97 @@ class _MenuDashboardPageState extends State<MenuDashboardPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.green[200],
+      backgroundColor: Color(0xff30384C),
       body: SafeArea(
-        child: Stack(
-          children: <Widget>[
-            sideBar(),
-            home(),
-          ],
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          child: Stack(
+            children: <Widget>[
+              sideBar(),
+              homeScreen(),
+            ],
+          ),
         ),
       ),
     );
   }
 
   Widget sideBar() {
-    return Padding(
-      padding: const EdgeInsets.only(left: 16.0),
-      child: Align(
-        alignment: Alignment.centerLeft,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text("Dashboard",
-                style: TextStyle(color: Colors.white, fontSize: 21)),
-            SizedBox(height: 10),
-            Text("Messages",
-                style: TextStyle(color: Colors.white, fontSize: 22)),
-            SizedBox(height: 10),
-            Text("Utility Bills",
-                style: TextStyle(color: Colors.white, fontSize: 22)),
-            SizedBox(height: 10),
-            Text("Funds Transfer",
-                style: TextStyle(color: Colors.white, fontSize: 22)),
-            SizedBox(height: 10),
-            Text("Branches",
-                style: TextStyle(color: Colors.white, fontSize: 22)),
-          ],
-        ),
+    return Container(
+      width: MediaQuery.of(context).size.width * .6,
+      height: MediaQuery.of(context).size.height,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Container(
+            margin: EdgeInsets.only(left: 10, top: 20),
+            height: 50,
+            width: 50,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.white,
+              image: DecorationImage(
+                image: AssetImage('assets/profile.jpg'),
+                fit: BoxFit.fill,
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.all(10.0),
+            child: Text('Dewet Baumann',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold)),
+          ),
+          allOptions(),
+        ],
       ),
     );
   }
 
-  Widget home() {
+  Expanded allOptions() {
+    return Expanded(
+        child: Container(
+      padding: EdgeInsets.symmetric(horizontal: 10),
+      width: MediaQuery.of(context).size.width * .6,
+      color: Colors.white,
+      child: Column(
+        children: <Widget>[
+          myCustomButton(Icons.person_outline, 'Mi Perfil'),
+          myCustomButton(Icons.local_activity, 'Actividades'),
+          myCustomButton(Icons.help_outline_outlined, 'Ayuda'),
+          myCustomButton(Icons.support_agent, 'Soporte tecnico'),
+          myCustomButton(Icons.logout, 'Cerrar sesion'),
+        ],
+      ),
+    ));
+  }
+
+  TextButton myCustomButton(iconButton, textButton) {
+    return TextButton(
+      onPressed: () {},
+      child: Row(
+        children: <Widget>[
+          Icon(
+            iconButton,
+            color: Colors.grey,
+            size: 30,
+          ),
+          SizedBox(
+            width: 15,
+          ),
+          Text(
+            textButton,
+            style: TextStyle(color: Colors.grey[700]),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget homeScreen() {
     return AnimatedPositioned(
       duration: Duration(milliseconds: 500),
       top: 0,
@@ -63,33 +111,41 @@ class _MenuDashboardPageState extends State<MenuDashboardPage> {
       child: Material(
         animationDuration: Duration(milliseconds: 500),
         elevation: 8,
-        color: Colors.grey[200],
-        child: Container(
-          padding: EdgeInsets.all(20),
-          child: Column(
-            children: <Widget>[
-              Row(
-                children: <Widget>[
-                  InkWell(
-                    onTap: () {
-                      setState(() {
-                        isTaped = !isTaped;
-                        print(isTaped);
-                      });
-                    },
-                    child: Icon(Icons.menu),
-                  ),
-                  Expanded(
-                      child: Center(
-                    child: Text(
-                      'Screen One',
-                    ),
-                  )),
-                ],
-              ),
-            ],
-          ),
+        child: Column(
+          children: <Widget>[
+            customAppBar(),
+          ],
         ),
+      ),
+    );
+  }
+
+  Container customAppBar() {
+    return Container(
+      color: Color(0xff30384C),
+      padding: EdgeInsets.all(15),
+      child: Row(
+        children: <Widget>[
+          InkWell(
+            onTap: () {
+              setState(() {
+                isTaped = !isTaped;
+                print(isTaped);
+              });
+            },
+            child: Icon(Icons.menu, color: Colors.white),
+          ),
+          Expanded(
+              child: Center(
+            child: Text(
+              'Screen One',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold),
+            ),
+          )),
+        ],
       ),
     );
   }
